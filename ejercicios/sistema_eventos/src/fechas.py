@@ -1,7 +1,6 @@
 from datetime import date
 
 def formatear_fecha(fecha: date) -> str:
-    # Diccionarios manuales para evitar 'locale'
     meses = [
         "enero", "febrero", "marzo", "abril", "mayo", "junio",
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"

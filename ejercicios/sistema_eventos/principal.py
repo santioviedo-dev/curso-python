@@ -1,4 +1,4 @@
-from src.eventos import agregar_evento, listar_proximos_eventos
+from src import eventos
 
 def main():
     while True:
@@ -14,7 +14,6 @@ def main():
             eventos = listar_proximos_eventos()
             for evento in eventos:
                 print(f"{evento['nombre']}: {evento['fecha_formateada']} ({evento['dias_restantes']} días restantes)")
-                
         elif opcion == "3":
             break
 

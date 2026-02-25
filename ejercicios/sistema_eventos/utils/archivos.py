@@ -6,5 +6,5 @@ def cargar_eventos() -> list[tuple[str, str]]:
         return []
 
 def guardar_evento(nombre: str, fecha_str: str) -> None:
-    with open("../eventos.txt", "a") as f:
+    with open("../eventos.txt", "a", enconding="UTF-8") as f:
         f.write(f"{nombre},{fecha_str}\n")

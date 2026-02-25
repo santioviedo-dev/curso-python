@@ -4,13 +4,12 @@ from src.fechas import formatear_fecha, calcular_dias_restantes
 
 def agregar_evento(nombre: str, fecha_str: str) -> str:
     try:
-        fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+        fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date() # 2025-05-13
         if fecha < datetime.now().date():
             return "¡La fecha debe ser futura!"
         
         guardar_evento(nombre, fecha_str)
         return "Evento registrado ✅"
-    
     except ValueError:
         return "Formato inválido. Usa YYYY-MM-DD."
 
@@ -19,7 +18,7 @@ def listar_proximos_eventos() -> list:
     hoy = datetime.now().date()
     
     eventos_futuros = []
-    for nombre, fecha_str in eventos:
+    for nombre, fecha_str in eventos: 
         fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
         if fecha >= hoy:
             dias_restantes = calcular_dias_restantes(fecha)
