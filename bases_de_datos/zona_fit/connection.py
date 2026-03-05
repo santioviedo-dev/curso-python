@@ -1,18 +1,18 @@
 
 from mysql.connector import pooling
 from mysql.connector import Error
-class Conexion:
+class Connection:
     DATABASE = "zona_fit"
     USERNAME = "root"
     PASSWORD = "root"
     DB_PORT = "3307"
     HOST = "localhost"
-    POOL_SIZE = 5 # Cantidad de conexiones disponibles
+    POOL_SIZE = 5 # number of available connections
     POOL_NAME = "zona_fit_pool"
     pool = None
     
     @classmethod
-    def obtener_pool(cls):
+    def get_pool(cls):
         if cls.pool is None:
             try:
                 cls.pool = pooling.MySQLConnectionPool(
@@ -26,15 +26,15 @@ class Conexion:
                 )
                 return cls.pool
             except Error as e:
-                print(f"Ocurrió un error al obtener pool: {e}")
+                print(f"Error: {e}")
         else:
             return cls.pool
     @classmethod
-    def obtener_conexion(cls):
-        return cls.obtener_pool().get_connection()
+    def acquire(cls):
+        return cls.get_pool().get_connection()
     @classmethod
-    def liberar_conexion(cls, conexion):
-        conexion.close()
+    def release(cls, connection):
+        connection.close()
         
 
     
