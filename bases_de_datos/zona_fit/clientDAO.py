@@ -28,9 +28,69 @@ class ClientDAO:
                 cursor.close()
                 Connection.release(conn)
             
+    @classmethod
+    def insert(cls, client: Client):
+        conn = None
+        try:
+            conn = Connection.acquire()
+            cursor = conn.cursor()
+            values = (client.first_name, client.last_name, client.membership)
+            cursor.execute(cls.INSERT, values)
+            conn.commit()
+            client.id = cursor.lastrowid
+            return cursor.rowcount
+        except Exception as e:
+            print(f"An error occurred while inserting clients: {e}")
+        finally:
+            if conn is not None:
+                cursor.close()
+                Connection.release(conn)
+                
+    @classmethod
+    def update(cls, client: Client):
+        conn = None
+        try:
+            conn = Connection.acquire()
+            cursor = conn.cursor()
+            values = (client.first_name, client.last_name, client.membership, client.id)
+            cursor.execute(cls.UPDATE, values)
+            conn.commit()
+            return cursor.rowcount
+        except Exception as e:
+            print(f"An error occurred while updating clients: {e}")
+        finally:
+            if conn is not None:
+                cursor.close()
+                Connection.release(conn)
 
+    @classmethod
+    def delete(cls, client_id):
+        conn = None
+        try:
+            conn = Connection.acquire()
+            cursor = conn.cursor()
+            cursor.execute(cls.DELETE, (client_id,))
+            conn.commit()
+            return cursor.rowcount
+        except Exception as e:
+            print(f"An error occurred while updating clients: {e}")
+        finally:
+            if conn is not None:
+                cursor.close()
+                Connection.release(conn)
+    
 
 if __name__ == "__main__":
+    # client = Client(first_name="Fernando", last_name="Quintero", membership=300)    
+    # inserted_clients = ClientDAO.insert(client)
+    # print(f"Inserted Clients: {inserted_clients}")
+    # client.first_name = "Juan"
+    # updated_clients = ClientDAO.update(client)
+    # print(f"Updated Clients: {updated_clients}")
+    
+    deleted_client = Client(id=3)
+    deleted_clients = ClientDAO.delete(deleted_client.id)
+    print(f"Eliminated clients: {deleted_clients}")
     clients = ClientDAO.select()
     # for client in clients:
     #     print(client)
