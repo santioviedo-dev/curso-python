@@ -57,5 +57,4 @@ table.bind("<<TreeviewSelect>>", showselected)
 table.grid(row=0, column=0, sticky=tk.NSEW)
 
 
-
 window.mainloop()
