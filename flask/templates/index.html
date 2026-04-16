@@ -22,6 +22,10 @@
         <div class="col">
           <form action="/save" method="POST" autocomplete="off">
             {{ form.csrf_token }}
+
+          <!--<input type="hidden", id="id", value=""> -> si quisieramos colocar manualmente el id oculto-->
+
+            {{ form.id }}
             <div class="mb-3">
               {{ form.first_name.label(class="form-label") }}
               {{ form.first_name(class="form-control", placeholder="First name") }}
@@ -41,6 +45,7 @@
               <!-- <button type="reset" class="btn btn-danger mb-3">Reset</button> -->
             </div>
           </form>
+
         </div>
         <div class="col">
           <table class="table">

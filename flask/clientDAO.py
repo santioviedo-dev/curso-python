@@ -3,6 +3,7 @@ from client import Client
 
 class ClientDAO:
     SELECT = "SELECT * FROM clients ORDER BY id"
+    SELECT_BY_ID = "SELECT * FROM clients WHERE id=%s"
     INSERT = "INSERT INTO clients(first_name, last_name, membership) VALUES(%s, %s, %s)"
     UPDATE = "UPDATE clients SET first_name=%s, last_name=%s, membership=%s WHERE id=%s"
     DELETE = "DELETE FROM clients WHERE id=%s"
@@ -27,6 +28,27 @@ class ClientDAO:
             if conn is not None:
                 cursor.close()
                 Connection.release(conn)
+                
+                
+    @classmethod
+    def select_by_id(cls, id):
+        conn = None
+        try:
+            conn = Connection.acquire()
+            cursor = conn.cursor()
+            values = (id,)
+            cursor.execute(cls.SELECT_BY_ID, values)
+            registry = cursor.fetchone() 
+            # Mapping
+            client = Client(registry[0], registry[1], registry[2], registry[3])
+            return client
+        except Exception as e:
+            print(f"An error occurred while obtaining client: {e}")
+        finally:
+            if conn is not None:
+                cursor.close()
+                Connection.release(conn)
+            
             
     @classmethod
     def insert(cls, client: Client):

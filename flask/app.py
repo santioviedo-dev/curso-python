@@ -26,14 +26,28 @@ def save():
     client_form = ClientForm(obj=client)
     if client_form.validate_on_submit():
         client_form.populate_obj(client)
-        ClientDAO.insert(client)
+        if not client.id:
+            ClientDAO.insert(client)
+        else:
+            ClientDAO.update(client)
     return redirect("/")
 
 @app.route("/reset")
 def reset():
     return redirect("/")
 
+@app.route("/edit/<int:id>") # if the data is string, we can skip define the type
+def edit(id):
+    client = ClientDAO.select_by_id(id)
+    client_form = ClientForm(obj=client)
+    clients_db = ClientDAO.select()
+    return render_template("index.html", title=app_title, clients=clients_db, form=client_form)
 
+@app.route("/delete/<int:id>")
+def delete(id):
+    ClientDAO.delete(id)
+    return redirect("/")
+    
 
 
 if __name__ == "__main__":

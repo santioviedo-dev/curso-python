@@ -2,10 +2,10 @@
 from mysql.connector import pooling
 from mysql.connector import Error
 class Connection:
-    DATABASE = "zona_fit"
+    DATABASE = "fit_zone"
     USERNAME = "root"
-    PASSWORD = "root"
-    DB_PORT = "3307"
+    PASSWORD = "Guada121221."
+    DB_PORT = "3306"
     HOST = "localhost"
     POOL_SIZE = 5 # number of available connections
     POOL_NAME = "zona_fit_pool"
