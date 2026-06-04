@@ -5,7 +5,7 @@ from marshmallow import ValidationError
 from extensions import db
 from models import Empleado
 from schemas import empleado_schema, empleados_schema
-from .. import api
+from . import api
 
 class Empleados(Resource):
     # GET /api/empleados
